@@ -1,30 +1,15 @@
 package ca.agoldfish.carfaxtechnicalassignment;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
 import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
-
-import static ca.agoldfish.carfaxtechnicalassignment.MainActivity.CALL_DEALER_PERMISSION_CODE;
 
 public class CarDetailActivity extends BaseActivity {
 

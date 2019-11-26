@@ -1,15 +1,9 @@
 package ca.agoldfish.carfaxtechnicalassignment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -30,7 +24,7 @@ import java.util.ArrayList;
 import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
 import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
 
-public class MainActivity extends BaseActivity implements CarItemAdapter.OnCarClickListener {
+public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCarClickListener {
 
     public static final String EXTRA_URL = "imageURL";
     public static final int CALL_DEALER_PERMISSION_CODE = 1;
@@ -106,7 +100,7 @@ public class MainActivity extends BaseActivity implements CarItemAdapter.OnCarCl
 
                             }
 
-                            _CarItemAdapter = new CarItemAdapter(MainActivity.this, _CarItems,MainActivity.this);
+                            _CarItemAdapter = new CarItemAdapter(CarListActivity.this, _CarItems, CarListActivity.this);
                             _RecyclerView.setAdapter(_CarItemAdapter);
 
                         } catch (JSONException e) {
@@ -129,7 +123,7 @@ public class MainActivity extends BaseActivity implements CarItemAdapter.OnCarCl
     @Override
     public void onCallClick(String phoneNumber){
         //you can send the phoneNumber instead of the fake number
-        HelperMethods.makeCall(this, MainActivity.this,"1234567890");
+        HelperMethods.makeCall(this, CarListActivity.this,"1234567890");
     }
 
     @Override
