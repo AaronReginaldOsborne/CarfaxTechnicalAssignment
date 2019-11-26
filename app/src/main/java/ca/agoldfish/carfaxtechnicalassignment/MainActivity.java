@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
 import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
 
-public class MainActivity extends AppCompatActivity implements CarItemAdapter.OnCarClickListener {
+public class MainActivity extends BaseActivity implements CarItemAdapter.OnCarClickListener {
 
     public static final String EXTRA_URL = "imageURL";
     public static final int CALL_DEALER_PERMISSION_CODE = 1;

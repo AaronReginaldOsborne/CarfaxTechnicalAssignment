@@ -26,7 +26,7 @@ import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
 
 import static ca.agoldfish.carfaxtechnicalassignment.MainActivity.CALL_DEALER_PERMISSION_CODE;
 
-public class CarDetailActivity extends AppCompatActivity {
+public class CarDetailActivity extends BaseActivity {
 
     CarItem carItem;
     @Override
