@@ -9,16 +9,16 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
-import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 
 public class CarDetailActivity extends BaseActivity {
 
-    CarItem carItem;
+    Vehicle vehicle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car_detail);
-        carItem = getIntent().getParcelableExtra("carItem_data");
+        vehicle = getIntent().getParcelableExtra("carItem_data");
 
 
         //TODO: using kotlin will get rid of this
@@ -37,20 +37,20 @@ public class CarDetailActivity extends BaseActivity {
         TextView fuel_tv = findViewById(R.id.fuel_cd_tv);
 
         //set values
-        if (!carItem.get_imageUrl().equals(""))
-            Picasso.get().load(carItem.get_imageUrl()).fit().centerInside().into(imageView);
-        title_tv.setText(carItem.get_year() + " " + carItem.get_make() + " " + carItem.get_model());
-        rating_rb.setRating(carItem.get_rating());
-        price_tv.setText(String.format("$%,d",carItem.get_price()));
-        milage_tv.setText(String.format("%,d",carItem.get_milage()));
-        location_tv.setText(carItem.get_city()+ " , "+ carItem.get_state());
-        exterior_tv.setText(carItem.get_exterior_color());
-        interior_tv.setText(carItem.get_interior_color());
-        drive_tv.setText(carItem.get_drive_type());
-        transmission_tv.setText(carItem.get_transmision());
-        body_tv.setText(carItem.get_body_type());
-        engine_tv.setText(carItem.get_engine());
-        fuel_tv.setText(carItem.get_fuel());
+        if (!vehicle.get_imageUrl().equals(""))
+            Picasso.get().load(vehicle.get_imageUrl()).fit().centerInside().into(imageView);
+        title_tv.setText(vehicle.get_year() + " " + vehicle.get_make() + " " + vehicle.get_model());
+        rating_rb.setRating(vehicle.get_rating());
+        price_tv.setText(String.format("$%,d", vehicle.get_price()));
+        milage_tv.setText(String.format("%,d", vehicle.get_milage()));
+        location_tv.setText(vehicle.get_city()+ " , "+ vehicle.get_state());
+        exterior_tv.setText(vehicle.get_exterior_color());
+        interior_tv.setText(vehicle.get_interior_color());
+        drive_tv.setText(vehicle.get_drive_type());
+        transmission_tv.setText(vehicle.get_transmision());
+        body_tv.setText(vehicle.get_body_type());
+        engine_tv.setText(vehicle.get_engine());
+        fuel_tv.setText(vehicle.get_fuel());
 
     }
 

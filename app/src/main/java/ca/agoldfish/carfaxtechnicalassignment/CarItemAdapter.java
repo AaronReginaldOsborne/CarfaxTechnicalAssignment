@@ -1,6 +1,5 @@
 package ca.agoldfish.carfaxtechnicalassignment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,26 +15,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
-import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
-
-import static ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods.*;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 
 public class CarItemAdapter extends RecyclerView.Adapter<CarItemAdapter.carItemViewHolder> {
 
     private Context _Context;
-    private ArrayList<CarItem> _CarItems;
+    private ArrayList<Vehicle> _Vehicles;
     private OnCarClickListener _onCarClickListener;
 
     public interface OnCarClickListener {
-        void onItemClick(int adapterPosition, CarItem carItem, ImageView mImageView);
+        void onItemClick(int adapterPosition, Vehicle vehicle, ImageView mImageView);
         void onCallClick(String phoneNumber);
 
     }
 
-    public CarItemAdapter(Context context, ArrayList<CarItem> carItems, OnCarClickListener onCarClickListener){
+    public CarItemAdapter(Context context, ArrayList<Vehicle> vehicles, OnCarClickListener onCarClickListener){
         _Context = context;
-        _CarItems = carItems;
+        _Vehicles = vehicles;
         _onCarClickListener = onCarClickListener;
     }
 
@@ -49,13 +44,13 @@ public class CarItemAdapter extends RecyclerView.Adapter<CarItemAdapter.carItemV
 
     @Override
     public void onBindViewHolder(@NonNull final carItemViewHolder holder, int i) {
-        final CarItem carItem = _CarItems.get(i);
-        String imageUrl = carItem.get_imageUrl();
-        String year = carItem.get_year();
-        String make = carItem.get_make();
-        String model = carItem.get_model();
-        int price = carItem.get_price();
-        int milage = carItem.get_milage();
+        final Vehicle vehicle = _Vehicles.get(i);
+        String imageUrl = vehicle.get_imageUrl();
+        String year = vehicle.get_year();
+        String make = vehicle.get_make();
+        String model = vehicle.get_model();
+        int price = vehicle.get_price();
+        int milage = vehicle.get_milage();
 
         //check if the image Url is blank
         if(!imageUrl.equals(""))
@@ -64,12 +59,12 @@ public class CarItemAdapter extends RecyclerView.Adapter<CarItemAdapter.carItemV
         holder._title_tv.setText(year + " " + make + " " + model);
         holder._price_tv.setText(String.format("$%,d",price)+"");
         holder._mileage.setText(String.format("%,d",milage)+" Miles");
-        holder._location.setText(carItem.get_city()+ " , "+ carItem.get_state());
+        holder._location.setText(vehicle.get_city()+ " , "+ vehicle.get_state());
 
         holder._call_dealer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _onCarClickListener.onCallClick(carItem.get_phoneNumber());
+                _onCarClickListener.onCallClick(vehicle.get_phoneNumber());
             }
         });
 
@@ -77,14 +72,14 @@ public class CarItemAdapter extends RecyclerView.Adapter<CarItemAdapter.carItemV
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                _onCarClickListener.onItemClick(holder.getAdapterPosition(), carItem, holder._car_img);
+                _onCarClickListener.onItemClick(holder.getAdapterPosition(), vehicle, holder._car_img);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return _CarItems.size();
+        return _Vehicles.size();
     }
 
     public class carItemViewHolder extends RecyclerView.ViewHolder{

@@ -5,7 +5,7 @@ import android.os.Parcelable
 
 
 //location will be lat and log
-data class CarItem(
+data class Vehicle(
         var _id: String,
         var _rating: Float,
         var _imageUrl: String,
@@ -83,12 +83,12 @@ data class CarItem(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<CarItem> {
-        override fun createFromParcel(parcel: Parcel): CarItem {
-            return CarItem(parcel)
+    companion object CREATOR : Parcelable.Creator<Vehicle> {
+        override fun createFromParcel(parcel: Parcel): Vehicle {
+            return Vehicle(parcel)
         }
 
-        override fun newArray(size: Int): Array<CarItem?> {
+        override fun newArray(size: Int): Array<Vehicle?> {
             return arrayOfNulls(size)
         }
     }

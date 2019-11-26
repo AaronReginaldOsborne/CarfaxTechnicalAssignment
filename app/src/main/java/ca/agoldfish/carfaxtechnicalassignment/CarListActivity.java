@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
@@ -19,20 +21,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
-import ca.agoldfish.carfaxtechnicalassignment.model.CarItem;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
+import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest;
+import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
+import ca.agoldfish.carfaxtechnicalassignment.requests.ServiceGenerator;
+import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleAPI;
+import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleListingsResponse;
+import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleResponse;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+import static ca.agoldfish.carfaxtechnicalassignment.util.Constants.EXTRA_URL;
 
 public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCarClickListener {
 
-    public static final String EXTRA_URL = "imageURL";
+    //tag
+    private static final String TAG = "CarListActivity";
     public static final int CALL_DEALER_PERMISSION_CODE = 1;
-
-
     private RecyclerView _RecyclerView;
     private CarItemAdapter _CarItemAdapter;
-    private ArrayList<CarItem> _CarItems;
+    private ArrayList<Vehicle> _Vehicles;
     private RequestQueue mRequestQueue;
 
     private int test = 0;
@@ -49,10 +62,11 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
         _RecyclerView.setHasFixedSize(true);
         _RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        _CarItems = new ArrayList<>();
+        _Vehicles = new ArrayList<>();
 
         mRequestQueue = Volley.newRequestQueue(this);
         jsonParse();
+
     }
 
     private void jsonParse() {
@@ -69,38 +83,38 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
                                 JSONObject listing = listings.getJSONObject(i);
 
                                 // better way of doing this would be to use GSON and a VM
-                                CarItem carItem = new CarItem();
+                                Vehicle vehicle = new Vehicle();
                                 int imageCount = listing.getInt("imageCount");
                                 if (imageCount > 0)
-                                    carItem.set_imageUrl(listing.getJSONObject("images").getJSONObject("firstPhoto").getString("large"));
-                                carItem.set_id(listing.getString("id"));
-                                carItem.set_year(listing.getString("year"));
-                                carItem.set_make(listing.getString("make"));
-                                carItem.set_model(listing.getString("model"));
-                                carItem.set_trim(listing.getString("trim"));
-                                carItem.set_price(listing.getInt("currentPrice"));
-                                carItem.set_milage(listing.getInt("mileage"));
+                                    vehicle.set_imageUrl(listing.getJSONObject("images").getJSONObject("firstPhoto").getString("large"));
+                                vehicle.set_id(listing.getString("id"));
+                                vehicle.set_year(listing.getString("year"));
+                                vehicle.set_make(listing.getString("make"));
+                                vehicle.set_model(listing.getString("model"));
+                                vehicle.set_trim(listing.getString("trim"));
+                                vehicle.set_price(listing.getInt("currentPrice"));
+                                vehicle.set_milage(listing.getInt("mileage"));
                                 JSONObject dealer = listing.getJSONObject("dealer");
-                                carItem.set_rating((float) dealer.getDouble("dealerAverageRating"));
-                                carItem.set_city(dealer.getString("city"));
-                                carItem.set_state(dealer.getString("state"));
-                                carItem.set_latitude(dealer.getString("latitude"));
-                                carItem.set_longitude(dealer.getString("longitude"));
-                                carItem.set_phoneNumber(dealer.getString("phone"));
-                                carItem.set_interior_color(listing.getString("interiorColor"));
-                                carItem.set_exterior_color(listing.getString("exteriorColor"));
-                                carItem.set_drive_type(listing.getString("drivetype"));
-                                carItem.set_transmision(listing.getString("transmission"));
-                                carItem.set_engine(listing.getString("engine"));
-                                carItem.set_body_type(listing.getString("bodytype"));
-                                carItem.set_fuel(listing.getString("fuel"));
+                                vehicle.set_rating((float) dealer.getDouble("dealerAverageRating"));
+                                vehicle.set_city(dealer.getString("city"));
+                                vehicle.set_state(dealer.getString("state"));
+                                vehicle.set_latitude(dealer.getString("latitude"));
+                                vehicle.set_longitude(dealer.getString("longitude"));
+                                vehicle.set_phoneNumber(dealer.getString("phone"));
+                                vehicle.set_interior_color(listing.getString("interiorColor"));
+                                vehicle.set_exterior_color(listing.getString("exteriorColor"));
+                                vehicle.set_drive_type(listing.getString("drivetype"));
+                                vehicle.set_transmision(listing.getString("transmission"));
+                                vehicle.set_engine(listing.getString("engine"));
+                                vehicle.set_body_type(listing.getString("bodytype"));
+                                vehicle.set_fuel(listing.getString("fuel"));
 
                                 // should use RXJava to have live data
-                                _CarItems.add(carItem);
+                                _Vehicles.add(vehicle);
 
                             }
 
-                            _CarItemAdapter = new CarItemAdapter(CarListActivity.this, _CarItems, CarListActivity.this);
+                            _CarItemAdapter = new CarItemAdapter(CarListActivity.this, _Vehicles, CarListActivity.this);
                             _RecyclerView.setAdapter(_CarItemAdapter);
 
                         } catch (JSONException e) {
@@ -127,16 +141,55 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
     }
 
     @Override
-    public void onItemClick(int adapterPosition, CarItem carItem, ImageView mImageView) {
+    public void onItemClick(int adapterPosition, Vehicle vehicle, ImageView mImageView) {
         Intent intent = new Intent(this, CarDetailActivity.class);
 
-        intent.putExtra(EXTRA_URL, carItem.get_imageUrl());
-        intent.putExtra("carItem_data", carItem);
+        intent.putExtra(EXTRA_URL, vehicle.get_imageUrl());
+        intent.putExtra("carItem_data", vehicle);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
                 mImageView,
                 "imgAnimation");
 
         startActivity(intent, options.toBundle());
+    }
+
+    public void testRetrofitRequest(){
+        VehicleAPI vehicleAPI = ServiceGenerator.getVehicleAPI();
+
+        Call<VehicleListingsResponse> vehicleResponseCall = vehicleAPI.getVehicles();
+
+        vehicleResponseCall.enqueue(new Callback<VehicleListingsResponse>() {
+            @Override
+            public void onResponse(Call<VehicleListingsResponse> call, retrofit2.Response<VehicleListingsResponse> response) {
+                Log.d(TAG, "onResponse: server response : " + response.toString());
+                if(response.code() == 200){
+                    Log.d(TAG, "onResponse: " + response.body().toString());
+                    List<VehicleTest2> vehicles = new ArrayList<>(response.body().getVehicles());
+
+                    //test if it is working
+                    for(VehicleTest2 vehicle: vehicles){
+                        Log.d(TAG, "onResponse: " + vehicle.getBadge());
+                    }
+                }
+                else{
+                    try {
+                        Log.d(TAG, "onResponse: "+response.errorBody().string());
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleListingsResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void Retrofit(View view) {
+        //testing
+        testRetrofitRequest();
     }
 }
