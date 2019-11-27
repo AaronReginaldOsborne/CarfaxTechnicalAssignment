@@ -12,9 +12,8 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import ca.agoldfish.carfaxtechnicalassignment.AppExecutors;
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleListingsResponse;
-import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleResponse;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -25,7 +24,7 @@ public class VehicleApiClient {
     private static final String TAG = "VehicleApiClient";
 
     private static VehicleApiClient instance;
-    private MutableLiveData<List<VehicleTest2>> mVehicles;
+    private MutableLiveData<List<Vehicle>> mVehicles;
     private RetrieveVehiclesRunnable mRetrieveVehiclesRunnable;
 
     public static VehicleApiClient getInstance() {
@@ -38,7 +37,7 @@ public class VehicleApiClient {
         mVehicles = new MutableLiveData<>();
     }
 
-    public LiveData<List<VehicleTest2>> getVehicles() {
+    public LiveData<List<Vehicle>> getVehicles() {
         return mVehicles;
     }
 
@@ -79,7 +78,7 @@ public class VehicleApiClient {
                     return;
 
                 if (response.code() == 200) {
-                    List<VehicleTest2> list = new ArrayList<>(((VehicleListingsResponse) response.body()).getVehicles());
+                    List<Vehicle> list = new ArrayList<>(((VehicleListingsResponse) response.body()).getVehicles());
 
                     //set value on a background thread
                     mVehicles.postValue(list);

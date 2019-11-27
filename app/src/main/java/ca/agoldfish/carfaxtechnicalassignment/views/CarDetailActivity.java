@@ -1,4 +1,4 @@
-package ca.agoldfish.carfaxtechnicalassignment;
+package ca.agoldfish.carfaxtechnicalassignment.views;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import ca.agoldfish.carfaxtechnicalassignment.helper.HelperMethods;
+import ca.agoldfish.carfaxtechnicalassignment.BaseActivity;
+import ca.agoldfish.carfaxtechnicalassignment.R;
+import ca.agoldfish.carfaxtechnicalassignment.util.HelperMethods;
 import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 
 public class CarDetailActivity extends BaseActivity {
@@ -37,20 +39,20 @@ public class CarDetailActivity extends BaseActivity {
         TextView fuel_tv = findViewById(R.id.fuel_cd_tv);
 
         //set values
-        if (!vehicle.get_imageUrl().equals(""))
-            Picasso.get().load(vehicle.get_imageUrl()).fit().centerInside().into(imageView);
-        title_tv.setText(vehicle.get_year() + " " + vehicle.get_make() + " " + vehicle.get_model());
-        rating_rb.setRating(vehicle.get_rating());
-        price_tv.setText(String.format("$%,d", vehicle.get_price()));
-        milage_tv.setText(String.format("%,d", vehicle.get_milage()));
-        location_tv.setText(vehicle.get_city()+ " , "+ vehicle.get_state());
-        exterior_tv.setText(vehicle.get_exterior_color());
-        interior_tv.setText(vehicle.get_interior_color());
-        drive_tv.setText(vehicle.get_drive_type());
-        transmission_tv.setText(vehicle.get_transmision());
-        body_tv.setText(vehicle.get_body_type());
-        engine_tv.setText(vehicle.get_engine());
-        fuel_tv.setText(vehicle.get_fuel());
+        if (vehicle.getImageCount()>0)
+            Picasso.get().load(vehicle.getImages().getLarge()[0]).fit().centerInside().into(imageView);
+        title_tv.setText(vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel());
+        rating_rb.setRating(vehicle.getDealer().getDealerReviewRating());
+        price_tv.setText(String.format("$%,d", vehicle.getCurrentPrice()));
+        milage_tv.setText(String.format("%,d", vehicle.getMileage()));
+        location_tv.setText(vehicle.getDealer().getCity()+ " , "+ vehicle.getDealer().getState());
+        exterior_tv.setText(vehicle.getExteriorColor());
+        interior_tv.setText(vehicle.getInteriorColor());
+        drive_tv.setText(vehicle.getDrivetype());
+        transmission_tv.setText(vehicle.getTransmission());
+        body_tv.setText(vehicle.getBodytype());
+        engine_tv.setText(vehicle.getEngine());
+        fuel_tv.setText(vehicle.getFuel());
 
     }
 

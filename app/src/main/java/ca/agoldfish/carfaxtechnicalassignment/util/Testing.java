@@ -4,13 +4,13 @@ import android.util.Log;
 
 import java.util.List;
 
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 
 public class Testing {
 
     //easier way to test the data
-    public static void printVehicles(List<VehicleTest2> list, String tag){
-        for(VehicleTest2 vehicle: list)
+    public static void printVehicles(List<Vehicle> list, String tag){
+        for(Vehicle vehicle: list)
             Log.d(tag, "printVehicles: ");
     }
 }

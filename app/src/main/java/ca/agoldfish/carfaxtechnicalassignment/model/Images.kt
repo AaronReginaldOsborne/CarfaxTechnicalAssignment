@@ -7,11 +7,18 @@ data class Images(
         var large: Array<String>,
         var medium: Array<String>,
         var small: Array<String>
-) :Parcelable {
+): Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.createStringArray(),
             parcel.createStringArray(),
             parcel.createStringArray())
+
+    //default constructor
+    constructor() : this(
+            emptyArray<String>(),
+            emptyArray<String>(),
+            emptyArray<String>()
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeStringArray(large)

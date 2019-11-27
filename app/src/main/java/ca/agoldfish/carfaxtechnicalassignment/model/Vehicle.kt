@@ -3,80 +3,65 @@ package ca.agoldfish.carfaxtechnicalassignment.model
 import android.os.Parcel
 import android.os.Parcelable
 
-
-//location will be lat and log
-data class Vehicle(
-        var _id: String,
-        var _rating: Float,
-        var _imageUrl: String,
-        var _year: String,
-        var _make: String,
-        var _model: String,
-        var _trim: String,
-        var _price: Int,
-        var _milage: Int,
-        var _city: String,
-        var _state: String,
-        var _latitude: String,
-        var _longitude: String,
-        var _phoneNumber: String,
-        var _interior_color: String,
-        var _exterior_color: String,
-        var _drive_type: String,
-        var _transmision: String,
-        var _engine: String,
-        var _body_type: String,
-        var _fuel :String): Parcelable {
+data class Vehicle (
+    var badge: String,
+    var bodytype: String,
+    var currentPrice: Int,
+    var dealer: Dealer,
+    var drivetype: String,
+    var engine: String,
+    var exteriorColor: String,
+    var fuel: String,
+    var id: String,
+    var imageCount : Int,
+    var images: Images,
+    var interiorColor: String,
+    var make: String,
+    var model: String,
+    var mileage: Int,
+    var transmission: String,
+    var trim: String,
+    var year: String
+    ) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
-            parcel.readFloat(),
+            parcel.readString(),
+            parcel.readInt(),
+            parcel.readParcelable(Dealer::class.java.classLoader),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readString(),
             parcel.readInt(),
+            parcel.readParcelable(Images::class.java.classLoader),
+            parcel.readString(),
+            parcel.readString(),
+            parcel.readString(),
             parcel.readInt(),
             parcel.readString(),
             parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString()
-            )
-
-    constructor() :this("",0.0f,"","","","","",0,0,"","",
-            "","","","","","","",
-            "","","")
+            parcel.readString())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(_id)
-        parcel.writeFloat(_rating)
-        parcel.writeString(_imageUrl)
-        parcel.writeString(_year)
-        parcel.writeString(_make)
-        parcel.writeString(_model)
-        parcel.writeString(_trim)
-        parcel.writeInt(_price)
-        parcel.writeInt(_milage)
-        parcel.writeString(_city)
-        parcel.writeString(_state)
-        parcel.writeString(_latitude)
-        parcel.writeString(_longitude)
-        parcel.writeString(_phoneNumber)
-        parcel.writeString(_interior_color)
-        parcel.writeString(_exterior_color)
-        parcel.writeString(_drive_type)
-        parcel.writeString(_transmision)
-        parcel.writeString(_engine)
-        parcel.writeString(_body_type)
-        parcel.writeString(_fuel)
+        parcel.writeString(badge)
+        parcel.writeString(bodytype)
+        parcel.writeInt(currentPrice)
+        parcel.writeParcelable(dealer, flags)
+        parcel.writeString(drivetype)
+        parcel.writeString(engine)
+        parcel.writeString(exteriorColor)
+        parcel.writeString(fuel)
+        parcel.writeString(id)
+        parcel.writeInt(imageCount)
+        parcel.writeParcelable(images, flags)
+        parcel.writeString(interiorColor)
+        parcel.writeString(make)
+        parcel.writeString(model)
+        parcel.writeInt(mileage)
+        parcel.writeString(transmission)
+        parcel.writeString(trim)
+        parcel.writeString(year)
     }
 
     override fun describeContents(): Int {
@@ -92,6 +77,4 @@ data class Vehicle(
             return arrayOfNulls(size)
         }
     }
-
 }
-

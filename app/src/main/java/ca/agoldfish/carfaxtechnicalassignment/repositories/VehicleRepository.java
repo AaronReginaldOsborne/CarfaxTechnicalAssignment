@@ -1,13 +1,14 @@
 package ca.agoldfish.carfaxtechnicalassignment.repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleApiClient;
 
+//this class is for when we have two or more ways of getting the data for example we grab the data from the API
+//We can also store the data into the SQLite within the phone storage so they can have access to the data while offline
 public class VehicleRepository {
 
     private static VehicleRepository instance;
@@ -23,7 +24,7 @@ public class VehicleRepository {
         mVehicleApiClient = VehicleApiClient.getInstance();
     }
 
-    public LiveData<List<VehicleTest2>> getVehicles() {
+    public LiveData<List<Vehicle>> getVehicles() {
         return mVehicleApiClient.getVehicles();
     }
 

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import java.util.List;
 
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
+import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
 import ca.agoldfish.carfaxtechnicalassignment.repositories.VehicleRepository;
 
 public class VehicleListViewModel extends ViewModel {
@@ -16,7 +16,7 @@ public class VehicleListViewModel extends ViewModel {
         mVehicleRepository = VehicleRepository.getInstance();
     }
 
-    public LiveData<List<VehicleTest2>> getVehicles() {
+    public LiveData<List<Vehicle>> getVehicles() {
         return mVehicleRepository.getVehicles();
     }
 

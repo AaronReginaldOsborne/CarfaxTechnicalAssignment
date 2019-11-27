@@ -4,6 +4,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+
+//this class is used to run background threads
 public class AppExecutors {
 
     private static AppExecutors instance;

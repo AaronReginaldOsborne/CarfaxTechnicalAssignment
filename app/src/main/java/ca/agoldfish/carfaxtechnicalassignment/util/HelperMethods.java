@@ -1,4 +1,4 @@
-package ca.agoldfish.carfaxtechnicalassignment.helper;
+package ca.agoldfish.carfaxtechnicalassignment.util;
 
 import android.Manifest;
 import android.app.Activity;
@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import static ca.agoldfish.carfaxtechnicalassignment.CarListActivity.CALL_DEALER_PERMISSION_CODE;
+import static ca.agoldfish.carfaxtechnicalassignment.views.CarListActivity.CALL_DEALER_PERMISSION_CODE;
 
 public class HelperMethods {
 

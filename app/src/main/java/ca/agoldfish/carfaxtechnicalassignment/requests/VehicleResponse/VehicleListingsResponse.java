@@ -6,16 +6,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import ca.agoldfish.carfaxtechnicalassignment.model.Vehicle;
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest;
-import ca.agoldfish.carfaxtechnicalassignment.model.VehicleTest2;
 
 public class VehicleListingsResponse {
 
     @SerializedName("listings")
     @Expose()
-    private List<VehicleTest2> vehicles;
+    private List<Vehicle> vehicles;
 
-    public List<VehicleTest2> getVehicles(){
+    public List<Vehicle> getVehicles(){
         return vehicles;
     }
 
