@@ -37,6 +37,7 @@ import ca.agoldfish.carfaxtechnicalassignment.requests.ServiceGenerator;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleAPI;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleListingsResponse;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleResponse;
+import ca.agoldfish.carfaxtechnicalassignment.util.Testing;
 import ca.agoldfish.carfaxtechnicalassignment.viewmodels.VehicleListViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -80,10 +81,7 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
             public void onChanged(List<VehicleTest2> vehicles) {
                 //testing
                 if (vehicles != null)
-                    for (VehicleTest2 vehicle : vehicles) {
-                        Log.d(TAG, "onChanged: " + vehicle.getModel());
-                    }
-
+                    Testing.printVehicles(vehicles,TAG);
             }
         });
     }
