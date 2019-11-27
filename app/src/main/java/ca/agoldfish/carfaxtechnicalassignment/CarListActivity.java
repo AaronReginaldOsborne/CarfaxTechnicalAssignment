@@ -1,6 +1,10 @@
 package ca.agoldfish.carfaxtechnicalassignment;
 
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +37,7 @@ import ca.agoldfish.carfaxtechnicalassignment.requests.ServiceGenerator;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleAPI;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleListingsResponse;
 import ca.agoldfish.carfaxtechnicalassignment.requests.VehicleResponse.VehicleResponse;
+import ca.agoldfish.carfaxtechnicalassignment.viewmodels.VehicleListViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -48,15 +53,14 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
     private ArrayList<Vehicle> _Vehicles;
     private RequestQueue mRequestQueue;
 
-    private int test = 0;
-
+    private VehicleListViewModel mVehicleListViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cars_listing);
 
-        setTitle("Carfax");
+        mVehicleListViewModel = ViewModelProviders.of(this).get(VehicleListViewModel.class);
 
         _RecyclerView = findViewById(R.id.car_listing_RV);
         _RecyclerView.setHasFixedSize(true);
@@ -67,6 +71,15 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
         mRequestQueue = Volley.newRequestQueue(this);
         jsonParse();
 
+    }
+
+    private void subscribeObservers(){
+        mVehicleListViewModel.getVehicles().observe(this, new Observer<List<VehicleTest2>>() {
+            @Override
+            public void onChanged(List<VehicleTest2> vehicleTest2s) {
+
+            }
+        });
     }
 
     private void jsonParse() {
@@ -190,6 +203,6 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
 
     public void Retrofit(View view) {
         //testing
-        testRetrofitRequest();
+        subscribeObservers();
     }
 }
