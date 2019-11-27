@@ -28,7 +28,6 @@ public class CarListActivity extends BaseActivity implements vehicleAdapter.OnCa
 
     //tag
     private static final String TAG = "CarListActivity";
-    public static final int CALL_DEALER_PERMISSION_CODE = 1;
     private RecyclerView mRecyclerView;
     private VehicleListViewModel mVehicleListViewModel;
 
@@ -45,10 +44,7 @@ public class CarListActivity extends BaseActivity implements vehicleAdapter.OnCa
 
         mVehicleListViewModel = ViewModelProviders.of(this).get(VehicleListViewModel.class);
         mRecyclerView = findViewById(R.id.car_listing_RV);
-
-
         mVehicles = new ArrayList<>();
-
         mRequestQueue = Volley.newRequestQueue(this);
         testRetrofitRequest();
 
@@ -102,10 +98,5 @@ public class CarListActivity extends BaseActivity implements vehicleAdapter.OnCa
                 "imgAnimation");
 
         startActivity(intent, options.toBundle());
-    }
-
-    public void Retrofit(View view) {
-        //testing
-        testRetrofitRequest();
     }
 }

@@ -22,7 +22,6 @@ public class CarDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_car_detail);
         vehicle = getIntent().getParcelableExtra("carItem_data");
 
-
         //TODO: using kotlin will get rid of this
         ImageView imageView = findViewById(R.id.image_cd_IV);
         TextView title_tv = findViewById(R.id.title_cd_TV);
