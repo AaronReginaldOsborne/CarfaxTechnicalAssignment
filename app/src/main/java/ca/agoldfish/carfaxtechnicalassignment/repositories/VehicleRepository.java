@@ -26,4 +26,9 @@ public class VehicleRepository {
     public LiveData<List<VehicleTest2>> getVehicles() {
         return mVehicleApiClient.getVehicles();
     }
+
+    //add search in the future here if we add multi pages
+    public void searchVehiclesApi(){
+        mVehicleApiClient.searchVehiclesApi();
+    }
 }

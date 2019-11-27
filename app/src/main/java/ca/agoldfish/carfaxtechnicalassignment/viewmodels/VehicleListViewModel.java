@@ -19,4 +19,8 @@ public class VehicleListViewModel extends ViewModel {
     public LiveData<List<VehicleTest2>> getVehicles() {
         return mVehicleRepository.getVehicles();
     }
+
+    public void searchVehiclesApi(){
+        mVehicleRepository.searchVehiclesApi();
+    }
 }

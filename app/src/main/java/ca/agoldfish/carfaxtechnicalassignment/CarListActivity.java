@@ -71,15 +71,29 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
         mRequestQueue = Volley.newRequestQueue(this);
         jsonParse();
 
+        subscribeObservers();
     }
 
-    private void subscribeObservers(){
+    private void subscribeObservers() {
         mVehicleListViewModel.getVehicles().observe(this, new Observer<List<VehicleTest2>>() {
             @Override
-            public void onChanged(List<VehicleTest2> vehicleTest2s) {
+            public void onChanged(List<VehicleTest2> vehicles) {
+                //testing
+                if (vehicles != null)
+                    for (VehicleTest2 vehicle : vehicles) {
+                        Log.d(TAG, "onChanged: " + vehicle.getModel());
+                    }
 
             }
         });
+    }
+
+    private void testRetrofitRequest(){
+        searchVehiclesApi();
+    }
+
+    private void searchVehiclesApi() {
+        mVehicleListViewModel.searchVehiclesApi();
     }
 
     private void jsonParse() {
@@ -148,9 +162,9 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
     //Code to setup the RecyclerView and Adapter
 
     @Override
-    public void onCallClick(String phoneNumber){
+    public void onCallClick(String phoneNumber) {
         //you can send the phoneNumber instead of the fake number
-        HelperMethods.makeCall(this, CarListActivity.this,"1234567890");
+        HelperMethods.makeCall(this, CarListActivity.this, "1234567890");
     }
 
     @Override
@@ -167,42 +181,8 @@ public class CarListActivity extends BaseActivity implements CarItemAdapter.OnCa
         startActivity(intent, options.toBundle());
     }
 
-    public void testRetrofitRequest(){
-        VehicleAPI vehicleAPI = ServiceGenerator.getVehicleAPI();
-
-        Call<VehicleListingsResponse> vehicleResponseCall = vehicleAPI.getVehicles();
-
-        vehicleResponseCall.enqueue(new Callback<VehicleListingsResponse>() {
-            @Override
-            public void onResponse(Call<VehicleListingsResponse> call, retrofit2.Response<VehicleListingsResponse> response) {
-                Log.d(TAG, "onResponse: server response : " + response.toString());
-                if(response.code() == 200){
-                    Log.d(TAG, "onResponse: " + response.body().toString());
-                    List<VehicleTest2> vehicles = new ArrayList<>(response.body().getVehicles());
-
-                    //test if it is working
-                    for(VehicleTest2 vehicle: vehicles){
-                        Log.d(TAG, "onResponse: " + vehicle.getBadge());
-                    }
-                }
-                else{
-                    try {
-                        Log.d(TAG, "onResponse: "+response.errorBody().string());
-                    }catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<VehicleListingsResponse> call, Throwable t) {
-
-            }
-        });
-    }
-
     public void Retrofit(View view) {
         //testing
-        subscribeObservers();
+        testRetrofitRequest();
     }
 }
