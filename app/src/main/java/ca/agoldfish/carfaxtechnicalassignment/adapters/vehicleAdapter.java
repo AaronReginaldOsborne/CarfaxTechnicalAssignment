@@ -11,7 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -55,9 +56,13 @@ public class vehicleAdapter extends RecyclerView.Adapter<vehicleAdapter.carItemV
         int price = vehicle.getCurrentPrice();
         int milage = vehicle.getMileage();
 
+
         //check if the image Url is blank
-        if (!imageUrl.equals(""))
-            Picasso.get().load(imageUrl).fit().centerInside().into(holder._car_img);
+        if (!imageUrl.equals("")){
+            Glide.with(mContext)
+                    .load(vehicle.getImages().getLarge()[0])
+                    .into(holder._car_img);
+        }
 
         holder._title_tv.setText(year + " " + make + " " + model);
         holder._price_tv.setText(String.format("$%,d", price) + "");

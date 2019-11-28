@@ -6,7 +6,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import ca.agoldfish.carfaxtechnicalassignment.BaseActivity;
 import ca.agoldfish.carfaxtechnicalassignment.R;
@@ -37,9 +38,13 @@ public class CarDetailActivity extends BaseActivity {
         TextView engine_tv = findViewById(R.id.engine_cd_tv);
         TextView fuel_tv = findViewById(R.id.fuel_cd_tv);
 
+
         //set values
-        if (vehicle.getImageCount()>0)
-            Picasso.get().load(vehicle.getImages().getLarge()[0]).fit().centerInside().into(imageView);
+        if (vehicle.getImageCount()>0) {
+            Glide.with(imageView.getContext())
+                    .load(vehicle.getImages().getLarge()[0])
+                    .into(imageView);
+        }
         title_tv.setText(vehicle.getYear() + " " + vehicle.getMake() + " " + vehicle.getModel());
         rating_rb.setRating(vehicle.getDealer().getDealerReviewRating());
         price_tv.setText(String.format("$%,d", vehicle.getCurrentPrice()));
