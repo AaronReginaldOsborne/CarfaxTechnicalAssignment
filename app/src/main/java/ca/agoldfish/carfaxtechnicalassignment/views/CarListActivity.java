@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,6 @@ public class CarListActivity extends BaseActivity implements vehicleAdapter.OnCa
 
     private vehicleAdapter mVehicleAdapter;
     private List<Vehicle> mVehicles;
-    private RequestQueue mRequestQueue;
 
 
 
@@ -45,7 +42,6 @@ public class CarListActivity extends BaseActivity implements vehicleAdapter.OnCa
         mVehicleListViewModel = ViewModelProviders.of(this).get(VehicleListViewModel.class);
         mRecyclerView = findViewById(R.id.car_listing_RV);
         mVehicles = new ArrayList<>();
-        mRequestQueue = Volley.newRequestQueue(this);
         testRetrofitRequest();
 
         initRecyclerView();

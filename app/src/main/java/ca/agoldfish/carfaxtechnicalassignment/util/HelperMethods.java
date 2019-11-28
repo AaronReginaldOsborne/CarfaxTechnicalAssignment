@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import static ca.agoldfish.carfaxtechnicalassignment.views.CarListActivity.CALL_DEALER_PERMISSION_CODE;
+import static ca.agoldfish.carfaxtechnicalassignment.util.Constants.CALL_DEALER_PERMISSION_CODE;
 
 public class HelperMethods {
 
